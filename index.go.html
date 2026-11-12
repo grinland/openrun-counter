@@ -15,6 +15,7 @@
       font-family: system-ui, sans-serif;
     }
     .card { text-align: center; }
+    .title { font-size: 1.2rem; font-weight: 500; opacity: 0.7; margin: 0 0 0.5em; }
     .buttons { display: flex; gap: 1rem; justify-content: center; }
     form { margin: 0; }
     #count {
@@ -33,6 +34,7 @@
 </head>
 <body>
   <div class="card">
+    <h1 class="title">Counter</h1>
     <p id="count">{{ template "count" . }}</p>
     <div class="buttons">
     <form action="{{.AppPath}}/decrement" method="post"
