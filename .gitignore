@@ -1,0 +1,4 @@
+*_gen*
+static/gen/
+config_gen.lock
+.DS_Store

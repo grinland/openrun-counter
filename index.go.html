@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Counter</title>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/htmx.min.js"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, sans-serif;
+    }
+    .card { text-align: center; }
+    #count {
+      font-size: 5rem;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin: 0 0 0.4em;
+    }
+    button {
+      font: inherit;
+      font-size: 2rem;
+      padding: 0.2em 0.9em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p id="count">{{ template "count" . }}</p>
+    <form action="{{.AppPath}}/increment" method="post"
+          hx-post="{{.AppPath}}/increment" hx-target="#count" hx-swap="innerHTML">
+      <button type="submit">+</button>
+    </form>
+  </div>
+</body>
+</html>
+
+{{ define "count" }}{{ .Data.count }}{{ end }}
