@@ -26,20 +26,28 @@ def get_counter(req):
     return {"count": current_count()}
 
 
-def increment(req):
+def _change(req, delta):
     store.begin()
     row = _load()
     if row:
-        row.value = row.value + 1
+        row.value = row.value + delta
         store.update(table.counter, row)
         count = row.value
     else:
-        store.insert(table.counter, doc.counter(name=COUNTER_NAME, value=1))
-        count = 1
+        store.insert(table.counter, doc.counter(name=COUNTER_NAME, value=delta))
+        count = delta
     store.commit()
     if req.IsPartial:
         return {"count": count}
     return ace.redirect(req.AppPath)
+
+
+def increment(req):
+    return _change(req, 1)
+
+
+def decrement(req):
+    return _change(req, -1)
 
 
 app = ace.app("Counter",
@@ -49,6 +57,8 @@ app = ace.app("Counter",
                            fragments=[
                                ace.fragment("increment", partial="count",
                                             method="POST", handler=increment),
+                               ace.fragment("decrement", partial="count",
+                                            method="POST", handler=decrement),
                            ]),
               ],
               permissions=[

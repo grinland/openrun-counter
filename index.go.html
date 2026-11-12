@@ -15,6 +15,8 @@
       font-family: system-ui, sans-serif;
     }
     .card { text-align: center; }
+    .buttons { display: flex; gap: 1rem; justify-content: center; }
+    form { margin: 0; }
     #count {
       font-size: 5rem;
       font-variant-numeric: tabular-nums;
@@ -32,10 +34,16 @@
 <body>
   <div class="card">
     <p id="count">{{ template "count" . }}</p>
+    <div class="buttons">
+    <form action="{{.AppPath}}/decrement" method="post"
+          hx-post="{{.AppPath}}/decrement" hx-target="#count" hx-swap="innerHTML">
+      <button type="submit" aria-label="Decrement">&minus;</button>
+    </form>
     <form action="{{.AppPath}}/increment" method="post"
           hx-post="{{.AppPath}}/increment" hx-target="#count" hx-swap="innerHTML">
-      <button type="submit">+</button>
+      <button type="submit" aria-label="Increment">+</button>
     </form>
+    </div>
   </div>
 </body>
 </html>
